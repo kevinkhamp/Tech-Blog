@@ -1,17 +1,19 @@
-<div class="posts-container">
-{{#each posts as |posts|}}
-<div class="row mb-4 project">
-  <div class="col-md-5">
-    <h2>
-      <a href="/posts/{{posts.id}}">{{posts.title}}</a>
-    </h2>
-    <p>Created by {{posts.user.name}} on {{format_date posts.date}}</p>
+<section class="content">
+  <div class="post-containter">
+    {{#each posts as |posts|}}
+    <div class="post-header">
+      <div class="post-created">
+        <p>
+          {{posts.title}}
+          {{posts.date}}
+        </p>
+      </div>
+      <div class="post-body">
+        <p>
+          {{posts.body}}
+        </p>
+      </div>
+    </div>
+    {{/each}}
   </div>
-  <div class="col-md-7">
-    <p>
-      {{posts.body}}
-    </p>
-  </div>
-</div>
-{{/each}}
-</div>
+</section>

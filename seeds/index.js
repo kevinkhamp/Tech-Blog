@@ -12,12 +12,11 @@ const seedDatabase = async () => {
         returning: true
     })
 
-    for (const posts of postData) {
-        await Posts.bulkCreate({
-            ...posts,
-            user_id: users[Math.floor(Math.random() * users.length)].isSoftDeleted
-        })
-    }
+    const posts = await Posts.bulkCreate(postData, {
+        individualHooks: true,
+        returning: true,
+    })
+    
     process.exit(0)
 }
 

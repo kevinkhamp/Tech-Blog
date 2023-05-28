@@ -8,28 +8,30 @@ router.get('/', async (req, res) => {
   res.render('homepage');
 });
 
-router.get('/', async (req,res) => {
+router.get('/', async (req, res) => {
   try {
+    // Get all projects and JOIN with user data
     const postData = await Posts.findAll({
       include: [
         {
           model: User,
-        attributes: ['name'],
-      },
-    ],
-  })
+          attributes: ['name'],
+        },
+      ],
+    });
 
-    const posts = postData.map((post) => post.get({plain:true}))
+    // Serialize data so the template can read it
+    const posts = postData.map((post) => post.get({ plain: true }));
 
-    res.render('homepage', {
-      posts,
-      logged_in: req.session.logged_in
-    })
+    // Pass serialized data and session flag into template
+    res.render('homepage', { 
+      posts, 
+      logged_in: req.session.logged_in 
+    });
+  } catch (err) {
+    res.status(500).json(err);
   }
-  catch (err) {
-    res.status(500).json(err)
-  }
-})
+});
 
 // Use withAuth middleware to prevent access to route
 router.get('/profile', withAuth, async (req, res) => {
